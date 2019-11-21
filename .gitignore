@@ -19,6 +19,8 @@ lib64/
 parts/
 sdist/
 var/
+.pyc
+.idea/
 wheels/
 *.egg-info/
 .installed.cfg
