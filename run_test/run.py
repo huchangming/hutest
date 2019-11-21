@@ -21,7 +21,7 @@ if __name__ == '__main__':
     from case import case_ui
     suite = unittest.TestSuite()
     suite.addTests([case_ui.Tours('test_visitor_create_order'), ])
-    suite.addTests([case_ui.Tours('test_custom_create_order'), ])
+    # suite.addTests([case_ui.Tours('test_custom_create_order'), ])
     with open(os.path.join(report_path,'%s.html' % now_time.get_times()), 'wb') as f:
         run = HTMLTestRunner.HTMLTestRunner(stream=f, description='ui_test_tours_create_order', verbosity=2, title='TourScool')
         run.run(suite)
