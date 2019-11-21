@@ -33,7 +33,7 @@ def get_image(test_case):
 class Tours(unittest.TestCase):
     my_log = log_d.logger('D:\\tours_report\\log.txt')
     my_log.info('**************************开始执行测试！************************************************************')
-    name = '胡昌明%s' % random.randint(1,2000000)
+    name = '胡昌明TEST%s' % random.randint(1,2000000)
     url = config_for_ui.url['n']
     def setUp(self):
         self.ele = webdriver.Chrome()
@@ -69,7 +69,7 @@ class Tours(unittest.TestCase):
                 self.ele.find_element_by_xpath('//input[@placeholder="请输入姓名"]').send_keys(self.name)
                 self.ele.find_element_by_xpath('//input[@placeholder="请输入电话号码"]').send_keys('17628055996')
                 self.ele.find_element_by_xpath('//input[@placeholder="请输入您的邮箱"]').send_keys('hhhmu@qq.com')
-                self.ele.find_element_by_xpath('//input[@placeholder="请输入中文姓名"]').send_keys('胡昌明')
+                self.ele.find_element_by_xpath('//input[@placeholder="请输入中文姓名"]').send_keys('胡昌明TEST')
                 self.ele.find_element_by_xpath('//input[@placeholder="姓（拼音或英文）"]').send_keys('Hu')
                 self.ele.find_element_by_xpath('//input[@placeholder="名（拼音或英文）"]').send_keys('ChangMing')
                 self.ele.find_element_by_xpath('//input[@placeholder="请选择"]').click()
@@ -78,7 +78,7 @@ class Tours(unittest.TestCase):
                 self.ele.find_element_by_xpath('//input[@placeholder="请输入护照号码"]').send_keys('G232432543')
                 self.ele.find_element_by_xpath('//span[text()="男"]').click()
                 self.ele.find_element_by_xpath('//input[@placeholder="请填写电话号码"]').send_keys('17628055999')
-                self.ele.find_element_by_tag_name('textarea').send_keys('这是一单自动创建订单,测试！')
+                self.ele.find_element_by_tag_name('textarea').send_keys('这是一单自动创建订单,测试TEST！')
                 self.ele.find_element_by_xpath('//span[text()="同意以下协议并付款"]').click()
                 time.sleep(3)
             except Exception as e:
