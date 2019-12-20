@@ -34,17 +34,18 @@ class Tours(unittest.TestCase):
     my_log = log_d.logger('D:\\tours_report\\log.txt')
     my_log.info('**************************开始执行测试！************************************************************')
     name = '胡昌明TEST%s' % random.randint(1,2000000)
-    url = config_for_ui.url['n']
+    url_pc = config_for_ui.url_pc['003']
+    url_m = config_for_ui.url_m['003']
     def setUp(self):
         self.ele = webdriver.Chrome()
-        self.ele.get(self.url)
-        self.ele.maximize_window()
-        self.ele.implicitly_wait(5)
+
 
     # 游客下单
     @get_image
-    def test_visitor_create_order(self):
-
+    def test_pc_visitor_create_order(self):
+        self.ele.get(self.url_pc)
+        self.ele.maximize_window()
+        self.ele.implicitly_wait(5)
         try:
             self.ele.find_element_by_css_selector('[title="最小化"]').click()
         except:
@@ -94,14 +95,16 @@ class Tours(unittest.TestCase):
             raise Exception('创建订单失败')
         self.ele.find_element_by_xpath('//span[text()="微信支付"]').click()
         time.sleep(4)
-        flag = 1 if self.ele.find_element_by_css_selector('[class="code-img"]') else 0
-        self.assertTrue(flag, msg='微信支付跳转失败')   # 断言 ，ture通过，不通过时进入装饰器执行截图操作
+        flag = self.ele.find_element_by_css_selector('[class="code-img"]').size['height']
+        self.assertTrue(flag>200, msg='微信支付跳转失败')   # 断言 ，ture通过，不通过时进入装饰器执行截图操作
 
 
     # 登录并用户下单
     @get_image
-    def test_custom_create_order(self):
-
+    def test_pc_custom_create_order(self):
+        self.ele.get(self.url_pc)
+        self.ele.maximize_window()
+        self.ele.implicitly_wait(5)
         ele = self.ele
         ele.find_element_by_css_selector('[class="set-list set-logIn"]').click()
         ele.find_element_by_xpath('//span[text()="账号密码登录"]').click()
@@ -134,14 +137,48 @@ class Tours(unittest.TestCase):
         ele.find_element_by_css_selector('[class="user-item hand"]').click()
         ele.find_element_by_tag_name('textarea').send_keys('这是一单用户自动创建订单,测试！')
         ele.find_element_by_xpath('//span[text()="同意以下协议并付款"]').click()
-        time.sleep(2)
+        time.sleep(5)
         html = self.ele.page_source
         if '微信支付' not in html:
             raise Exception('创建订单失败')
         self.ele.find_element_by_xpath('//span[text()="微信支付"]').click()
         time.sleep(4)
-        flag = 1 if self.ele.find_element_by_css_selector('[class="code-img"]') else 0
-        self.assertTrue(flag,msg='微信支付跳转失败')    # 断言 ，ture通过，并执行进入装饰器执行截图操作
+        # flag = 1 if self.ele.find_element_by_css_selector('[class="code-img"]') else 0
+        flag = self.ele.find_element_by_css_selector('[class="code-img"]').size['height']
+        self.assertTrue(flag>200,msg='微信支付跳转失败')    # 断言 ，ture通过，未通过时并执行进入装饰器执行截图操作
+    # m站加载慢
+    def test_m_visitor_create_order(self):
+        self.ele.get(self.url_m)
+        self.ele.set_window_size(400,1000)
+        self.ele.implicitly_wait(5)
+        self.ele.find_element_by_css_selector('.g-price-item').click()
+        time.sleep(2)
+        self.ele.find_element_by_xpath('//span[text()="下一步"]').click()
+        time.sleep(1)
+        self.ele.find_element_by_xpath('//span[text()="暂未选择接送机服务"]').click()
+        time.sleep(1)
+        self.ele.find_element_by_css_selector('[class="van-radio__label"]').click()
+        time.sleep(1)
+        self.ele.find_element_by_xpath('//span[text()="确认"]').click()
+        time.sleep(1)
+        self.ele.find_element_by_xpath('//span[text()="暂未选择行程"]').click()
+        time.sleep(1)
+        self.ele.find_elements_by_css_selector('[class="van-radio__label"]')[-3].click()
+        time.sleep(1)
+        self.ele.find_element_by_xpath('//span[text()="确认"]').click()
+        #录入游客信息
+        self.ele.find_element_by_css_selector('[placeholder="请输入英文姓"]').send_keys('huchangm')
+        self.ele.find_element_by_css_selector('[placeholder="请输入英文名"]').send_keys('test')
+        self.ele.find_element_by_css_selector('[placeholder="须与证件上一致"]').send_keys('G232111245')
+        self.ele.find_element_by_css_selector('[placeholder="填写联系人姓名"]').send_keys('test')
+        self.ele.find_element_by_css_selector('[placeholder="必填，用于接收信息"]').send_keys('17628055996')
+        self.ele.find_element_by_css_selector('[placeholder="必填，用于接收电子客票"]').send_keys('hhhmu@qq.com')
+        self.ele.find_element_by_css_selector('[placeholder="选填，你可备注预订相关要求"]').send_keys('m站自动化测试订单')
+        time.sleep(1)
+        self.ele.find_element_by_xpath('//span[text()="下一步"]').click()
+        time.sleep(2)
+        # 断言登录
+
 
 
 
