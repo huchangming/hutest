@@ -19,7 +19,7 @@ def get_image(test_case):
             test_case(self,*args, **kwargs)    # 正常每次都会返回被装饰的case去执行,当遇到错误case失败时,执行异常模块
         except Exception as e:
             time_str_map = now_time.get_times()
-            self.ele.get_screenshot_as_file('D:\\tours_report\\images\\%s.png' % time_str_map)
+            self.ele.get_screenshot_as_file('../tours_report/images/%s.png' % time_str_map)
             print('screenshot:', time_str_map, '.png')
             self.my_log.error(" %s 用例不通过:=====%s" % (test_case.__name__, str(e)))   # 日志尽量输出详细原始日志
             raise Exception(" %s 测试不通过" % test_case.__name__)
@@ -31,7 +31,7 @@ def get_image(test_case):
 
 # 测试类
 class Tours(unittest.TestCase):
-    my_log = log_d.logger('D:\\tours_report\\log.txt')
+    my_log = log_d.logger('../tours_report/log.txt')
     my_log.info('**************************开始执行测试！************************************************************')
     name = '胡昌明TEST%s' % random.randint(1,2000000)
     url_pc = config_for_ui.url_pc['003']
