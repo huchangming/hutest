@@ -21,6 +21,7 @@ sdist/
 var/
 .pyc
 .idea/
+tours_report/
 wheels/
 *.egg-info/
 .installed.cfg
